@@ -33,6 +33,7 @@ jobs:
           echo "NOW STRUCTURE"
           # Back to root (not needed, but shows structure)
           ls
+          echo "NOW release STRUCTURE"
           ls ./release
 
       - name: Upload ZIP artifact
