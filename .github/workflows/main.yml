@@ -46,7 +46,7 @@ jobs:
           retention-days: 30
 
       - name: Upload ZIP to release (if release published)
-        if: github.event_name == '${{vars.BUILD_NAME}}' && github.event.action == 'published'
+        if: github.event_name == release && github.event.action == 'published'
         uses: softprops/action-gh-release@v2
         with:
           files: ${{vars.BUILD_NAME}}.zip
