@@ -1,4 +1,4 @@
-name: Create Release ZIP
+name: Build Release ZIP
 
 on:
   push:
@@ -7,9 +7,9 @@ on:
     branches: [main]
   release:
     types: [published]
-    
+
 jobs:
-  release:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -19,8 +19,8 @@ jobs:
 
       - name: Create ZIP excluding folders
         run: |
-          # Exclude these folders (add your specific folders here)
-          EXCLUDED_FOLDERS=".git,node_modules,tests,docs,.github"
+          # Exclude these folders (customize as needed)
+          EXCLUDED_FOLDERS=".git,node_modules,tests,docs,.github,venv,.venv,dist,build"
           
           # Create zip excluding specified folders
           zip -r release.zip * -x "${EXCLUDED_FOLDERS}/*" "${EXCLUDED_FOLDERS}/**"
@@ -28,10 +28,17 @@ jobs:
           # Verify ZIP contents
           unzip -l release.zip
 
-      - name: Create Release
+      - name: Upload ZIP artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-zip
+          path: release.zip
+          retention-days: 30
+
+      - name: Upload ZIP to release (if release published)
+        if: github.event_name == 'release' && github.event.action == 'published'
         uses: softprops/action-gh-release@v2
         with:
           files: release.zip
-          generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
