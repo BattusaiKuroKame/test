@@ -26,19 +26,17 @@ jobs:
           zip -r release.zip * -x "${EXCLUDED_FOLDERS}/*" "${EXCLUDED_FOLDERS}/**"
           
           # Verify ZIP contents
-          unzip -l release.zip
-          
           mkdir -p release
-          cd release
-          unzip -l ../release.zip
-          cd ..
-          ls
+          unzip -l release.zip
+
+          # Back to root (not needed, but shows structure)
+          ls -la release/
 
       - name: Upload ZIP artifact
         uses: actions/upload-artifact@v4
         with:
           name: release-zip
-          path: /release
+          path: release
           retention-days: 30
 
       - name: Upload ZIP to release (if release published)
