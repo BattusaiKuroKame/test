@@ -30,6 +30,7 @@ jobs:
           mkdir -p release
           unzip -l release.zip
 
+          echo "NOW STRUCTURE"
           # Back to root (not needed, but shows structure)
           ls -la release/
 
