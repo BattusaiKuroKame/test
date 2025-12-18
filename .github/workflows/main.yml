@@ -1,0 +1,34 @@
+name: Create Release ZIP
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Create ZIP excluding folders
+        run: |
+          # Exclude these folders (add your specific folders here)
+          EXCLUDED_FOLDERS=".git,node_modules,tests,docs,.github"
+          
+          # Create zip excluding specified folders
+          zip -r release.zip * -x "${EXCLUDED_FOLDERS}/*" "${EXCLUDED_FOLDERS}/**"
+          
+          # Verify ZIP contents
+          unzip -l release.zip
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: release.zip
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
