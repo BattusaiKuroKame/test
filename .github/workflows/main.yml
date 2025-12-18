@@ -34,7 +34,9 @@ jobs:
           # Back to root (not needed, but shows structure)
           ls
           echo "NOW release STRUCTURE"
-          ls ./release
+          cd release
+          unzip -l ../release.zip
+          ls
 
       - name: Upload ZIP artifact
         uses: actions/upload-artifact@v4
