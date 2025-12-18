@@ -24,7 +24,8 @@ jobs:
           
           # Create zip excluding specified folders
           zip -r release.zip * -x "${EXCLUDED_FOLDERS}/*" "${EXCLUDED_FOLDERS}/**"
-          
+
+          echo "NOW ZIP CONTENT"
           # Verify ZIP contents
           mkdir -p release
           unzip -l release.zip
