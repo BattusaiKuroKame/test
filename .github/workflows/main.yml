@@ -28,21 +28,21 @@ jobs:
           echo "NOW ZIP CONTENT"
           # Verify ZIP contents
           mkdir -p release
-          unzip -l release.zip
+          unzip release.zip -d release/
 
-          echo "NOW STRUCTURE"
-          # Back to root (not needed, but shows structure)
-          ls
-          echo "BEFORE"
-          rm release.zip
-          echo "AFTER"
-          ls
+          # echo "NOW STRUCTURE"
+          # # Back to root (not needed, but shows structure)
+          # ls
+          # echo "BEFORE"
+          # rm release.zip
+          # echo "AFTER"
+          # ls
 
       - name: Upload ZIP artifact
         uses: actions/upload-artifact@v4
         with:
           name: release-zip
-          path: .
+          path: ./release
           retention-days: 30
 
       - name: Upload ZIP to release (if release published)
