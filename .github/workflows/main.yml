@@ -32,12 +32,13 @@ jobs:
           cd release
           unzip -l ../release.zip
           cd ..
+          ls
 
       - name: Upload ZIP artifact
         uses: actions/upload-artifact@v4
         with:
           name: release-zip
-          path: release
+          path: /release
           retention-days: 30
 
       - name: Upload ZIP to release (if release published)
