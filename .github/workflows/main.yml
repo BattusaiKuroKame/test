@@ -23,32 +23,24 @@ jobs:
           EXCLUDED_FOLDERS=".git,node_modules,tests,docs,.github,venv,.venv,dist,build"
           
           # Create zip excluding specified folders
-          zip -r ${{vars.BUILD_NAME}}.zip * -x "${EXCLUDED_FOLDERS}/*" "${EXCLUDED_FOLDERS}/**" "README.md" "test/*" "tests/*" "test/**" "tests/**"
-
-          echo "NOW ZIP CONTENT"
+          zip -r build_dir.zip * -x "${EXCLUDED_FOLDERS}/*" "${EXCLUDED_FOLDERS}/**" "README.md" "test/*" "tests/*" "test/**" "tests/**"
+          
+          echo "NOW Unzipping into build_dir directory"
           # Verify ZIP contents
-          mkdir -p ${{vars.BUILD_NAME}}
-          unzip ${{vars.BUILD_NAME}}.zip -d ${{vars.BUILD_NAME}}/
-
-          # echo "NOW STRUCTURE"
-          # # Back to root (not needed, but shows structure)
-          # ls
-          # echo "BEFORE"
-          # rm ${{vars.BUILD_NAME}}.zip
-          # echo "AFTER"
-          # ls
+          mkdir -p build_dir
+          unzip build_dir.zip -d build_dir/
 
       - name: Upload ZIP artifact
         uses: actions/upload-artifact@v4
         with:
           name: ${{vars.BUILD_NAME}}
-          path: ./${{vars.BUILD_NAME}}
-          retention-days: 30
+          path: ./build_dir
+          retention-days: 200
 
       - name: Upload ZIP to release (if release published)
         if: github.event_name == 'release' && github.event.action == 'published'
         uses: softprops/action-gh-release@v2
         with:
-          files: ${{vars.BUILD_NAME}}.zip
+          files: build_dir
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
