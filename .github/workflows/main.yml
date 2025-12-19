@@ -35,7 +35,7 @@ jobs:
         with:
           name: ${{vars.BUILD_NAME}}
           path: ./build_dir
-          retention-days: 200
+          retention-days: 90
 
       - name: Upload ZIP to release (if release published)
         if: github.event_name == 'release' && github.event.action == 'published'
