@@ -24,13 +24,14 @@ jobs:
           
           # Create zip EXCLUDING specified folders and files
           zip -r build_dir.zip * -x "README.md" "README*" "readme*" \
-                                    # "tests/*" "tests/**" \ # in folder and in folder recursinvly
-                                    "test/*" \
-                                    "tests/*" \
-                                    "backups/*" \
-                                    "build/*" \
-                                    ".github/*" \
-                                    ".git/*" \                                    
+                                    # "tests/*" "tests/**" \ 
+                                    # in folder and in folder recursinvely
+                                    "test/**" \
+                                    "tests/**" \
+                                    "backups/**" \
+                                    "build/**" \
+                                    ".github/**" \
+                                    ".git/**" \                                    
           
           echo "NOW Unzipping into build_dir directory"
           # Verify ZIP contents
