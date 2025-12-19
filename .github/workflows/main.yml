@@ -20,10 +20,10 @@ jobs:
       - name: Create ZIP excluding folders
         run: |
           # Exclude these folders (customize as needed)
-          EXCLUDED_FOLDERS=".git,node_modules,tests,docs,.github,venv,.venv,dist,build"
+          EXCLUDED_FOLDERS=".git,node_modules,test,tests,docs,.github,venv,.venv,dist,build,README.md,README*,backups"
           
           # Create zip excluding specified folders
-          zip -r build_dir.zip * -x "${EXCLUDED_FOLDERS}/*" "${EXCLUDED_FOLDERS}/**" "README.md" "test/*" "tests/*" "test/**" "tests/**"
+          zip -r build_dir.zip * -x "${EXCLUDED_FOLDERS}/*" "${EXCLUDED_FOLDERS}/**"
           
           echo "NOW Unzipping into build_dir directory"
           # Verify ZIP contents
